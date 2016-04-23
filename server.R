@@ -17,10 +17,11 @@ formatInput <- function(input)
    input <- gsub("[^[:alpha:][:space:][:punct:]]", "", input);
 
    inputCorpus <- VCorpus(VectorSource(input))
-   inputCorpus <- tm_map(inputCorpus, PlainTextDocument)
+   inputCorpus <- tm_map(inputCorpus, content_transformer(tolower))
    inputCorpus <- tm_map(inputCorpus, removePunctuation)
    inputCorpus <- tm_map(inputCorpus, removeNumbers)
-   inputCorpus <- tm_map(inputCorpus, stripWhitespace)
+   inputCorpus <- tm_map(inputCorpus, stripWhitespace)   
+   inputCorpus <- tm_map(inputCorpus, PlainTextDocument)
    input <- as.character(inputCorpus[[1]])
    input <- gsub("(^[[:space:]]+|[[:space:]]+$)", "", input)
    result <- ""
